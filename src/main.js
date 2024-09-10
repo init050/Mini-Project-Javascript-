@@ -3,7 +3,7 @@ let storage =localStorage.getItem("tasks")
 let tasks = storage ? JSON.parse(storage) :[]
 
 document.querySelector("#app").innerHTML = `
-  <h1 class="text-3xl"> تسک های امروز</h1>
+  <h1 class="text-3xl mr"> تسک های امروز</h1>
   <button id="add-task-btn" class="mt-10 btn border-2 border-dashed rounded-md p-4 input-bordered w-full">+ افزودن وظیفه ی جدید"</button>    
 
   <div id="task-form" class="hidden mt-4">
@@ -93,11 +93,19 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
               <button class="btn btn-sm delete">delete</button>
-              <button  class=" btn btn-sm ">edit</button>
+              <button class=" btn btn-sm edit">edit</button>
             </div>
           </div>
       
-         </div>`).join("")
+      <div id="task-form" class="hidden mt-4">
+    <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
+    <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+    <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+    </div>
+         </div>
+         
+         `).join("")
+
          localStorage.setItem("tasks",JSON.stringify(tasks))
       
     }
@@ -119,16 +127,36 @@ document.addEventListener("DOMContentLoaded", function () {
       if(event.target.classList.contains("delete")){
         const taskId = parseInt(event.target.parentNode.dataset.id)
         tasks=tasks.filter((task) => task.id !== taskId)
-        
+        render()
       }
  
       
        if(event.target.classList.contains("edit")){
         const taskId = parseInt(event.target.parentNode.dataset.id)
-        tasks=tasks.map((task) =>
-           task.id === taskId ?{...task,title:"newtitle"}:task)
+        const editForm = event.target.parentNode.parentNode.nextElementSibling
+        const updateInput = editForm.firstElementChild;
+        const updateButton = editForm.lastElementChild;
+        const updateDescription = updateInput.nextElementSibling;
+        if (editForm.classList.contains("hidden")) {
+          editForm.classList.remove("hidden");
+          editForm.classList.add("flex");
+        } else {
+          editForm.classList.remove("flex");
+          editForm.classList.add("hidden");
+        }
         
+        
+
+        updateButton.addEventListener("click", () => {
+          tasks = tasks.map((task) =>
+            task.id === taskId ? { ...task, title: updateInput.value, dec:updateDescription.value} : task
+          );
+          render();
+        });
+
       }
+
+
       /* if(event.target.classList.contains("setting")){
         settingList.innerHTML =` 
         <div class="flex border p-2 rounded-sm">
@@ -139,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
        } 
         */
-       render(); 
+      //  render(); 
 
 
     })
