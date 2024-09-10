@@ -215,6 +215,7 @@ taskList.addEventListener("click",(event)=>{
 
 
 
+
 doneTaskList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete")) {
     const taskId = parseInt(event.target.parentNode.dataset.id);
