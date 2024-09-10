@@ -106,23 +106,13 @@ document.addEventListener("DOMContentLoaded", function () {
          
          `).join("")
 
-         localStorage.setItem("tasks",JSON.stringify(tasks))
-      
+         localStorage.setItem("tasks",JSON.stringify(tasks))  
     }
     render();
+
     
-   /* set.addEventListener("click", () =>{
-      
-      settingList.innerHTML =` 
-      <div class="flex border p-2 rounded-sm">
-        <img src="./tabler_trash-x.png" alt="delete">
-        <img src="./tabler_edit.png" alt="edit">
-      </div>
-      `
-    });
-    */
-  
-    
+
+
     taskList.addEventListener("click",(event)=>{
       if(event.target.classList.contains("delete")){
         const taskId = parseInt(event.target.parentNode.dataset.id)
@@ -156,26 +146,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
       }
 
-
-      /* if(event.target.classList.contains("setting")){
-        settingList.innerHTML =` 
-        <div class="flex border p-2 rounded-sm">
-          <img src="./tabler_trash-x.png" alt="delete">
-          <img src="./tabler_edit.png" alt="edit">
-        </div>
-        `
-        
-       } 
-        */
-      //  render(); 
-
-
     })
-   /* editBtn.addEventListener("click",()=>{
-      
-      
-    })
-    */
-  
-
 });
