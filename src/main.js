@@ -22,7 +22,7 @@ document.querySelector("#app").innerHTML = `
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+
   
   const addTaskBtn = document.getElementById("add-task-btn");
   const taskform = document.getElementById("task-form");
@@ -81,63 +81,129 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
 
-  function render() {
-
-
-    taskList.innerHTML = tasks
-    .filter((task) => !task.isCompleted)
-    .map(
-      (task) =>
-    `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
-    <div class="flex gap-5">
-      <div class="form-control self-start">
-        <label class="label cursor-pointer">
-        <input data-id="${task.id}" type="checkbox" class="checkbox" />
-        </label>
-      </div>
-      <div >
-        <h3 class="font-bold mb-3">${task.title}</h3>
-        <p class="text-gray-500">${task.dec}</p>
-      </div>
+function render() {
+  taskList.innerHTML = tasks
+  .filter((task) => !task.isCompleted)
+  .map(
+    (task) =>
+  `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
+  <div class="flex gap-5">
+    <div class="form-control self-start">
+      <label class="label cursor-pointer">
+      <input data-id="${task.id}" type="checkbox" class="checkbox" />
+      </label>
     </div>
-    <div  class=" flex flex-col  cursor-pointer gap-2" >
-      <div>
-        <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
-      </div>
-      <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-        <button class="btn btn-sm delete">delete</button>
-        <button  class=" btn btn-sm ">edit</button>
-      </div>
+    <div >
+      <h3 class="font-bold mb-3">${task.title}</h3>
+      <p class="text-gray-500">${task.dec}</p>
     </div>
-    
-    
+  </div>
+  <div  class=" flex flex-col  cursor-pointer gap-2" >
+    <div>
+      <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
+    </div>
+    <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
+      <button class="btn btn-sm delete">delete</button>
+      <button  class=" btn btn-sm ">edit</button>
+    </div>
+  </div>
+  </div>`).join("")
+  localStorage.setItem("tasks",JSON.stringify(tasks))
 
-    </div>`).join("")
-    localStorage.setItem("tasks",JSON.stringify(tasks))
+
+
+  if (tasks.filter((task) => task.isCompleted).length > 0) {
+    doneTaskTitle.classList.remove("hidden");
+  } else {
+    doneTaskTitle.classList.add("hidden");
+  }
   
+  doneTaskList.innerHTML = tasks
+      .filter((task) => task.isCompleted)
+      .map(
+        (task) =>
+        `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
+        <div class="flex gap-5">
+          <div class="form-control self-start">
+            <label class="label cursor-pointer">
+            <input data-id="${task.id}" type="checkbox" checked="checked" class="checkbox" />
+            </label>
+          </div>
+          <div >
+            <h3 class="font-bold mb-3">${task.title}</h3>
+            <p class="text-gray-500">${task.dec}</p>
+          </div>
+        </div>
+        <div  class=" flex flex-col  cursor-pointer gap-2" >
+          <div>
+            <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
+          </div>
+          <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
+            <button class="btn btn-sm delete">delete</button>
+            <button  class=" btn btn-sm ">edit</button>
+          </div>
+        </div>
+        </div>`).join("")
+ 
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+}
+render();
+
+
+
+//edite and click
+taskList.addEventListener("click",(event)=>{
+  if(event.target.classList.contains("delete")){
+    const taskId = parseInt(event.target.parentNode.dataset.id)
+    tasks=tasks.filter((task) => task.id !== taskId)
+      
+  }
+
+
+    if(event.target.classList.contains("edit")){
+    const taskId = parseInt(event.target.parentNode.dataset.id)
+    tasks=tasks.map((task) =>
+        task.id === taskId ?{...task,title:"newtitle"}:task)
+      
+  }
+})
+
+
+
+taskList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("checkbox")) {
+    const taskId = parseInt(event.target.dataset.id);
+    tasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+    );
     
-  
   }
   render();
+})
 
+doneTaskList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("delete")) {
+    const taskId = parseInt(event.target.parentNode.dataset.id);
 
-  
+    // Delete task by filter method
+    tasks = tasks.filter((task) => task.id !== taskId);
 
-  taskList.addEventListener("click",(event)=>{
-    if(event.target.classList.contains("delete")){
-      const taskId = parseInt(event.target.parentNode.dataset.id)
-      tasks=tasks.filter((task) => task.id !== taskId)
-        
-    }
+    render();
+  }
 
-      if(event.target.classList.contains("edit")){
-      const taskId = parseInt(event.target.parentNode.dataset.id)
-      tasks=tasks.map((task) =>
-          task.id === taskId ?{...task,title:"newtitle"}:task)
-        
-    }
-      render(); 
+  if (event.target.classList.contains("checkbox")) {
+    const taskId = parseInt(event.target.dataset.id);
 
+    // Done task by map method
+    tasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
+    );
 
-  })
+    render();
+  }
 });
+
+
+render();
