@@ -104,7 +104,7 @@ function render() {
     </div>
     <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
       <button class="btn btn-sm delete">delete</button>
-      <button  class=" btn btn-sm ">edit</button>
+      <button class=" btn btn-sm edit">edit</button>
     </div>
   </div>
   </div>
@@ -168,6 +168,7 @@ taskList.addEventListener("click",(event)=>{
   if(event.target.classList.contains("delete")){
     const taskId = parseInt(event.target.parentNode.dataset.id)
     tasks=tasks.filter((task) => task.id !== taskId)
+    render()
   }
 
 
