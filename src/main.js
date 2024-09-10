@@ -163,10 +163,35 @@ render();
 
 //edite and click
 taskList.addEventListener("click",(event)=>{
+
+
   if(event.target.classList.contains("delete")){
     const taskId = parseInt(event.target.parentNode.dataset.id)
     tasks=tasks.filter((task) => task.id !== taskId)
-      
+  }
+
+
+  if(event.target.classList.contains("edit")){
+    const taskId = parseInt(event.target.parentNode.dataset.id)
+    const editForm = event.target.parentNode.parentNode.nextElementSibling
+    const updateInput = editForm.firstElementChild;
+    const updateButton = editForm.lastElementChild;
+    const updateDescription = updateInput.nextElementSibling;
+    if (editForm.classList.contains("hidden")) {
+      editForm.classList.remove("hidden");
+      editForm.classList.add("flex");
+    } else {
+      editForm.classList.remove("flex");
+      editForm.classList.add("hidden");
+    }
+    
+
+    updateButton.addEventListener("click", () => {
+      tasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, title: updateInput.value, dec:updateDescription.value} : task
+      );
+      render();
+    });
   }
 
 
@@ -176,20 +201,19 @@ taskList.addEventListener("click",(event)=>{
         task.id === taskId ?{...task,title:"newtitle"}:task)
       
   }
-})
 
 
-
-taskList.addEventListener("click", (event) => {
   if (event.target.classList.contains("checkbox")) {
     const taskId = parseInt(event.target.dataset.id);
     tasks = tasks.map((task) =>
       task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
     );
-    
   }
   render();
 })
+
+
+
 
 doneTaskList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete")) {
