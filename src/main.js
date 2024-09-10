@@ -107,7 +107,15 @@ function render() {
       <button  class=" btn btn-sm ">edit</button>
     </div>
   </div>
-  </div>`).join("")
+  </div>
+  
+  <div id="task-form" class="hidden mt-4">
+  <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
+  <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+  <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+  </div>
+  
+  `).join("")
   localStorage.setItem("tasks",JSON.stringify(tasks))
 
 
