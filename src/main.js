@@ -11,9 +11,13 @@ document.querySelector("#app").innerHTML = `
     <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
     <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
   </div>
+  <p id="task-count" class="mt-3"></p>
+
   <div id ="task-list"></div>
-
-
+  
+  <h1 id="done-task-title" class="text-2xl mt-10 hidden ">تسک های انجام شده</h2>
+  <ul class="mt-2" id="done-task-list"></ul>
+  
 `;
 
 
@@ -22,12 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
   const addTaskBtn = document.getElementById("add-task-btn");
   const taskform = document.getElementById("task-form");
-  
+
   const inputTaskTitle = document.getElementById('task-title');
   const inputTaskDec = document.getElementById('task-dec');
   const addTaskSubmit = document.getElementById("add-task-submit");
   const taskList = document.querySelector("#task-list");
   const editBtn =document.querySelector("#edit")
+  const doneTaskTitle = document.querySelector("#done-task-title");
+  const doneTaskList = document.querySelector("#done-task-list");
 
   
 
@@ -46,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
     taskform.classList.add('hidden');
     addTaskBtn.classList.remove('hidden');
     
-
 
     const taskTitle = inputTaskTitle.value;
     const taskDec = inputTaskDec.value;
@@ -71,83 +76,68 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(tasks)
     render();
   });
+
+
+
     
-    // render(); //TODO: It should be called after adding the Function render => UPDATE UI.
-    function render() {
-      taskList.innerHTML=tasks.map((task)=>
-        `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
-          <div class="flex gap-5">
-            <div class="form-control self-start">
-              <label class="label cursor-pointer">
-                <input type="checkbox" checked="checked" class="checkbox checkbox-primary border border-gray-400" />
-              </label>
-            </div>
-            <div >
-              <h3 class="font-bold mb-3">${task.title}</h3>
-              <p class="text-gray-500">${task.dec}</p>
-            </div>
-          </div>
-          <div  class=" flex flex-col  cursor-pointer gap-2" >
-            <div>
-              <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
-            </div>
-            <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-              <button class="btn btn-sm delete">delete</button>
-              <button  class=" btn btn-sm ">edit</button>
-            </div>
-          </div>
-      
-         </div>`).join("")
-         localStorage.setItem("tasks",JSON.stringify(tasks))
-      
-    }
-    render();
-    
-   /* set.addEventListener("click", () =>{
-      
-      settingList.innerHTML =` 
-      <div class="flex border p-2 rounded-sm">
-        <img src="./tabler_trash-x.png" alt="delete">
-        <img src="./tabler_edit.png" alt="edit">
+
+  function render() {
+
+
+    taskList.innerHTML = tasks
+    .filter((task) => !task.isCompleted)
+    .map(
+      (task) =>
+    `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
+    <div class="flex gap-5">
+      <div class="form-control self-start">
+        <label class="label cursor-pointer">
+        <input data-id="${task.id}" type="checkbox" class="checkbox" />
+        </label>
       </div>
-      `
-    });
-    */
+      <div >
+        <h3 class="font-bold mb-3">${task.title}</h3>
+        <p class="text-gray-500">${task.dec}</p>
+      </div>
+    </div>
+    <div  class=" flex flex-col  cursor-pointer gap-2" >
+      <div>
+        <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
+      </div>
+      <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
+        <button class="btn btn-sm delete">delete</button>
+        <button  class=" btn btn-sm ">edit</button>
+      </div>
+    </div>
+    
+    
+
+    </div>`).join("")
+    localStorage.setItem("tasks",JSON.stringify(tasks))
   
     
-    taskList.addEventListener("click",(event)=>{
-      if(event.target.classList.contains("delete")){
-        const taskId = parseInt(event.target.parentNode.dataset.id)
-        tasks=tasks.filter((task) => task.id !== taskId)
-        
-      }
- 
-      
-       if(event.target.classList.contains("edit")){
-        const taskId = parseInt(event.target.parentNode.dataset.id)
-        tasks=tasks.map((task) =>
-           task.id === taskId ?{...task,title:"newtitle"}:task)
-        
-      }
-      /* if(event.target.classList.contains("setting")){
-        settingList.innerHTML =` 
-        <div class="flex border p-2 rounded-sm">
-          <img src="./tabler_trash-x.png" alt="delete">
-          <img src="./tabler_edit.png" alt="edit">
-        </div>
-        `
-        
-       } 
-        */
-       render(); 
+  
+  }
+  render();
 
 
-    })
-   /* editBtn.addEventListener("click",()=>{
-      
-      
-    })
-    */
   
 
+  taskList.addEventListener("click",(event)=>{
+    if(event.target.classList.contains("delete")){
+      const taskId = parseInt(event.target.parentNode.dataset.id)
+      tasks=tasks.filter((task) => task.id !== taskId)
+        
+    }
+
+      if(event.target.classList.contains("edit")){
+      const taskId = parseInt(event.target.parentNode.dataset.id)
+      tasks=tasks.map((task) =>
+          task.id === taskId ?{...task,title:"newtitle"}:task)
+        
+    }
+      render(); 
+
+
+  })
 });
