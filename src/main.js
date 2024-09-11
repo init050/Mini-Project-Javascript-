@@ -91,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <div>
               <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
             </div>
-            <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-              <button class="btn btn-sm delete">delete</button>
-              <button  class=" btn btn-sm ">edit</button>
+            <div id ="dots" data-id = ${task.id} class="hidden flex gap-2 border border-gray-400 p-1 rounded-md">
+              <img class="delete border-l-2 pl-2" src="./assets/tabler_trash-x.png" alt="delete">
+              <img class="edit" src="./assets/tabler_edit.png" alt="edit">
             </div>
           </div>
       
@@ -119,15 +119,19 @@ document.addEventListener("DOMContentLoaded", function () {
       if(event.target.classList.contains("delete")){
         const taskId = parseInt(event.target.parentNode.dataset.id)
         tasks=tasks.filter((task) => task.id !== taskId)
-        
+      render();   
       }
  
       
-       if(event.target.classList.contains("edit")){
+      if(event.target.classList.contains("edit")){
         const taskId = parseInt(event.target.parentNode.dataset.id)
         tasks=tasks.map((task) =>
-           task.id === taskId ?{...task,title:"newtitle"}:task)
-        
+        task.id === taskId ?{...task,title:"newtitle"}:task)
+      render();  
+      }
+      if(event.target.classList.contains("setting")){
+        const set = event.target.parentNode.nextElementSibling 
+        set.classList.remove('hidden')
       }
       /* if(event.target.classList.contains("setting")){
         settingList.innerHTML =` 
@@ -139,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
        } 
         */
-       render(); 
+        
 
 
     })
