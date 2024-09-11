@@ -24,16 +24,16 @@ document.querySelector("#app").innerHTML = `
 
 
   
-  const addTaskBtn = document.getElementById("add-task-btn");
-  const taskform = document.getElementById("task-form");
+const addTaskBtn = document.getElementById("add-task-btn");
+const taskform = document.getElementById("task-form");
 
-  const inputTaskTitle = document.getElementById('task-title');
-  const inputTaskDec = document.getElementById('task-dec');
-  const addTaskSubmit = document.getElementById("add-task-submit");
-  const taskList = document.querySelector("#task-list");
-  const editBtn =document.querySelector("#edit")
-  const doneTaskTitle = document.querySelector("#done-task-title");
-  const doneTaskList = document.querySelector("#done-task-list");
+const inputTaskTitle = document.getElementById('task-title');
+const inputTaskDec = document.getElementById('task-dec');
+const addTaskSubmit = document.getElementById("add-task-submit");
+const taskList = document.querySelector("#task-list");
+const editBtn =document.querySelector("#edit")
+const doneTaskTitle = document.querySelector("#done-task-title");
+const doneTaskList = document.querySelector("#done-task-list");
 
   
 
@@ -149,20 +149,23 @@ function render() {
           </div>
           <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
             <button class="btn btn-sm delete">delete</button>
-            <button  class=" btn btn-sm ">edit</button>
+            <button class=" btn btn-sm edit">edit</button>
           </div>
         </div>
+
+  <div id="task-form" class="hidden mt-4">
+  <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
+  <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+  <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+  </div>
         </div>`).join("")
  
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
-
 }
 render();
 
 
-
-//edite and click
 taskList.addEventListener("click",(event)=>{
 
 
@@ -195,50 +198,66 @@ taskList.addEventListener("click",(event)=>{
       render();
     });
   }
+ 
+})
 
 
-  //   if(event.target.classList.contains("edit")){
-  //   const taskId = parseInt(event.target.parentNode.dataset.id)
-  //   tasks=tasks.map((task) =>
-  //       task.id === taskId ?{...task,title:"newtitle"}:task)
-      
-  // }
 
-
+taskList.addEventListener("click",(event)=>{
   if (event.target.classList.contains("checkbox")) {
     const taskId = parseInt(event.target.dataset.id);
     tasks = tasks.map((task) =>
       task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
     );
+    render();
   }
-  render();
+  
 })
-
-
 
 
 
 doneTaskList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete")) {
     const taskId = parseInt(event.target.parentNode.dataset.id);
-
-    // Delete task by filter method
     tasks = tasks.filter((task) => task.id !== taskId);
-
     render();
   }
+
 
   if (event.target.classList.contains("checkbox")) {
     const taskId = parseInt(event.target.dataset.id);
-
-    // Done task by map method
     tasks = tasks.map((task) =>
       task.id === taskId ? { ...task, isCompleted: !task.isCompleted } : task
     );
-
     render();
   }
+
+
+  if (event.target.classList.contains("edit")) {
+    const taskId = parseInt(event.target.parentNode.dataset.id);
+    const editForm = event.target.parentNode.parentNode.nextElementSibling;
+    const updateInput = editForm.firstElementChild;
+    const updateButton = editForm.lastElementChild;
+    const updateDescription = updateInput.nextElementSibling;
+
+    if (editForm.classList.contains("hidden")) {
+      editForm.classList.remove("hidden");
+      editForm.classList.add("flex");
+    } else {
+      editForm.classList.remove("flex");
+      editForm.classList.add("hidden");
+    }
+
+    updateButton.addEventListener("click", () => {
+      tasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, title: updateInput.value, dec: updateDescription.value } : task
+      );
+      render();
+    });
+
+  }
 });
+
 
 
 render();
