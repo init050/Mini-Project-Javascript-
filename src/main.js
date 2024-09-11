@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
     
     // render(); //TODO: It should be called after adding the Function render => UPDATE UI.
+    //change button to img in line 96 , 97
     function render() {
       taskList.innerHTML=tasks.map((task)=>
         `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
@@ -129,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
         task.id === taskId ?{...task,title:"newtitle"}:task)
       render();  
       }
+      //3نقطه
       if(event.target.classList.contains("setting")){
         const set = event.target.parentNode.nextElementSibling 
         set.classList.remove('hidden')
