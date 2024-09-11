@@ -107,12 +107,13 @@ function render() {
       <button class=" btn btn-sm edit">edit</button>
     </div>
   </div>
-  </div>
+  
   
   <div id="task-form" class="hidden mt-4">
   <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
   <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
   <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+  </div>
   </div>
   
   `).join("")
@@ -196,12 +197,12 @@ taskList.addEventListener("click",(event)=>{
   }
 
 
-    if(event.target.classList.contains("edit")){
-    const taskId = parseInt(event.target.parentNode.dataset.id)
-    tasks=tasks.map((task) =>
-        task.id === taskId ?{...task,title:"newtitle"}:task)
+  //   if(event.target.classList.contains("edit")){
+  //   const taskId = parseInt(event.target.parentNode.dataset.id)
+  //   tasks=tasks.map((task) =>
+  //       task.id === taskId ?{...task,title:"newtitle"}:task)
       
-  }
+  // }
 
 
   if (event.target.classList.contains("checkbox")) {
