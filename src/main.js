@@ -1,3 +1,32 @@
+const darkModeBtn = document.querySelector(".theme-btn--dark");  
+const lightModeBtn = document.querySelector(".theme-btn--light");  
+
+
+const body = document.body;  
+
+  
+let savedTheme = localStorage.getItem("theme");  
+if (savedTheme) {  
+  body.classList.add(savedTheme);  
+} else {  
+  body.classList.add("light-mode");  
+}  
+
+
+darkModeBtn.addEventListener("click", () => {  
+  body.classList.add("dark-mode");  
+  body.classList.remove("light-mode");  
+  localStorage.setItem("theme", "dark-mode");  
+});  
+
+lightModeBtn.addEventListener("click", () => {  
+  body.classList.add("light-mode");  
+  body.classList.remove("dark-mode");  
+  localStorage.setItem("theme", "light-mode");  
+});
+
+
+
 
 let storage =localStorage.getItem("tasks")
 let tasks = storage ? JSON.parse(storage) :[]
@@ -19,7 +48,6 @@ document.querySelector("#app").innerHTML = `
   <ul class="mt-2" id="done-task-list"></ul>
   
 `;
-
 
 
 
@@ -99,9 +127,6 @@ function render() {
     </div>
   </div>
   <div  class=" flex flex-col  cursor-pointer gap-2" >
-    <div>
-      <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
-    </div>
     <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
       <button class="btn btn-sm delete">delete</button>
       <button class=" btn btn-sm edit">edit</button>
@@ -144,9 +169,6 @@ function render() {
           </div>
         </div>
         <div  class=" flex flex-col  cursor-pointer gap-2" >
-          <div>
-            <img class="setting" src="./assets/Frame 1000005552.png" alt="setting">
-          </div>
           <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
             <button class="btn btn-sm delete">delete</button>
             <button class=" btn btn-sm edit">edit</button>
