@@ -13,11 +13,14 @@ if (savedTheme) {
 }  
 
 
+
 darkModeBtn.addEventListener("click", () => {  
   body.classList.add("dark-mode");  
   body.classList.remove("light-mode");  
   localStorage.setItem("theme", "dark-mode");  
 });  
+
+
 
 lightModeBtn.addEventListener("click", () => {  
   body.classList.add("light-mode");  
@@ -27,16 +30,19 @@ lightModeBtn.addEventListener("click", () => {
 
 
 
-
 let storage =localStorage.getItem("tasks")
 let tasks = storage ? JSON.parse(storage) :[]
 
+
+
 document.querySelector("#app").innerHTML = `
   <h1 class="text-3xl"> تسک های امروز</h1>
-  <button id="add-task-btn" class="mt-10 btn border-2 border-dashed rounded-md p-4 input-bordered w-full">+ افزودن وظیفه ی جدید"</button>    
+  <button id="add-task-btn" class="mt-10 btn border-2 border-dashed border-[#203E62] rounded-md p-4 input-bordered w-full flex items-center">
+  <span class=" w-full text-right">+ افزودن وظیفه ی جدید</span>
+</button>
 
 
-
+  
   <button id="add-task-tag" class= "hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
   <div id="tag-options" class="hidden mt-2">
     <button data-tag="low" class="tag-option bg-green-500 text-white px-4 py-2 rounded-md">پایین</button>
@@ -48,9 +54,8 @@ document.querySelector("#app").innerHTML = `
 
   <div id="task-form" class="hidden mt-4">
     <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-    <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+    <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
     <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
-    
   </div>
   <p id="task-count" class="mt-3"></p>
 
@@ -60,6 +65,7 @@ document.querySelector("#app").innerHTML = `
   <ul class="mt-2" id="done-task-list"></ul>
   
 `;
+
 
 
 const addTaskBtn = document.getElementById("add-task-btn");
@@ -75,6 +81,7 @@ const addTag = document.querySelector('#add-task-tag')
 const tagOption = document.querySelector('#tag-options')
 
   
+
 // Show form when adding task button is clicked. 
 addTaskBtn.addEventListener('click', function(){
   addTaskBtn.classList.add('hidden')
@@ -92,6 +99,8 @@ addTag.addEventListener('click', function(){
     
   })
 })
+
+
 
 document.querySelectorAll('.tag-option').forEach((button) => {
   button.addEventListener('click', function() {
@@ -141,8 +150,6 @@ addTaskSubmit.addEventListener('click', function(){
 
 
 
-    
-
 function render() {
 
   taskList.innerHTML = tasks
@@ -170,9 +177,11 @@ function render() {
       </div>
       
       
+
+      
       <div id="task-form" class="hidden flex flex-col w-full mt-4">
       <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-      <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
       <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
       </div>
       </div>
@@ -203,7 +212,7 @@ function render() {
       
       <div id="task-form" class="hidden flex flex-col w-full mt-4">
       <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-      <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
       <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
       </div>
       </div>
@@ -234,8 +243,8 @@ function render() {
             </label>
           </div>
           <div >
-            <h3 class="font-bold mb-3">${task.title}</h3>
-            <p class="text-gray-500">${task.dec}</p>
+            <h3 class="font-bold mb-3"><s>${task.title}</s></h3>
+            
           </div>
         </div>
         <div  class=" flex flex-col  cursor-pointer gap-2" >    
@@ -245,9 +254,11 @@ function render() {
           </div>
         </div>
 
+        
+
   <div id="task-form" class="hidden flex flex-col w-full mt-4">
   <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-  <textarea id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></textarea>
+  <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
   <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
   </div>
         </div>`).join("")
@@ -257,6 +268,7 @@ function render() {
     selectedTag = ''
 }
 render();
+
 
 
 taskList.addEventListener("click",(event)=>{
@@ -275,6 +287,9 @@ taskList.addEventListener("click",(event)=>{
     const updateInput = editForm.firstElementChild;
     const updateButton = editForm.lastElementChild;
     const updateDescription = updateInput.nextElementSibling;
+    addTag.classList.remove('hidden')
+    // const updateTag = editForm.querySelector('#edit-task-tag');
+    // const taskToEdit = tasks.find((task) => task.id === taskId);
     if (editForm.classList.contains("hidden")) {
       editForm.classList.remove("hidden");
       editForm.classList.add("flex");
@@ -295,7 +310,7 @@ taskList.addEventListener("click",(event)=>{
 })
 
 
-
+//chekbox
 taskList.addEventListener("click",(event)=>{
   if (event.target.classList.contains("checkbox")) {
     const taskId = parseInt(event.target.dataset.id);
