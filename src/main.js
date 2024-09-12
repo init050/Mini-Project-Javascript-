@@ -47,8 +47,8 @@ document.querySelector("#app").innerHTML = `
     <div id="task-form" class="hidden mt-4 border rounded-xl">
 
 
-      <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
+      <input  type="text" id='task-title' placeholder='نام تسک' class='txt border p-2 rounded-md w-full mb-2' />
+      <input  id="task-dec" placeholder='توضیحات' class="txt border p-2 rounded-md w-full mb-2"></input  >
       <button id="add-task-tag" class= " m-3 hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
       
     
@@ -189,8 +189,8 @@ function render() {
 
       
       <div id="task-form" class="hidden flex flex-col w-full mt-4"> 
-      <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
+      <input type="text" id='task-title' placeholder='نام تسک' class='txt border p-2 rounded-md w-full mb-2' />
+      <input id="task-dec" placeholder='توضیحات' class="txt border p-2 rounded-md w-full mb-2"></input  >
       <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">ویرایش تسک</button>
       </div>
       </div>
@@ -226,8 +226,8 @@ function render() {
       
       
       <div id="task-form" class="hidden flex flex-col w-full mt-4">
-      <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
+      <input type="text" id='task-title' placeholder='نام تسک' class='txt border p-2 rounded-md w-full mb-2' />
+      <input id="task-dec" placeholder='توضیحات' class="txt border p-2 rounded-md w-full mb-2"></input  >
       <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">ویرایش تسک</button>
       </div>
       </div>

@@ -585,7 +585,7 @@ video {
 .start {
   display: flex;
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 18px;
   gap: 10px;
 
 }
@@ -882,7 +882,7 @@ color: #fdfcfc !important;
 }  
 
 
-.dark-mode input, textarea{
+.dark-mode .txt{
   background: transparent;
   border: none;
   outline: none;
@@ -898,7 +898,8 @@ color: #333;
 
 
 
-.light-mode input, textarea{
+
+.light-mode .txt {
   background:white;
   border: none;
   outline: none;
