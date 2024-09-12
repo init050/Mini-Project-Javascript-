@@ -37,9 +37,10 @@ let tasks = storage ? JSON.parse(storage) :[]
 
 document.querySelector("#app").innerHTML = `
   <h1 class="text-3xl"> تسک های امروز</h1>
-  <button id="add-task-btn" class=" bg-[#091120]  mt-10 btn border-2 border-dashed border-[#203E62] rounded-md p-4 input-bordered w-full flex items-center">
-  <span class=" w-full text-right">+ افزودن وظیفه ی جدید</span>
-</button>
+  <p id="task-count" class="mt-3"></p>
+  <button id="add-task-btn" class="rrr bg-[#091120]  mt-10 btn border-2 border-dashed border-[#203E62] rounded-md p-4 input-bordered w-full flex items-center">
+    <span class=" w-full text-right">+ افزودن وظیفه ی جدید</span>
+  </button>
 
 
 
@@ -66,7 +67,7 @@ document.querySelector("#app").innerHTML = `
     
 
 
-  <p id="task-count" class="mt-3"></p>
+  
 
   <div id ="task-list"></div>
   
@@ -88,6 +89,7 @@ const doneTaskTitle = document.querySelector("#done-task-title");
 const doneTaskList = document.querySelector("#done-task-list");
 const addTag = document.querySelector('#add-task-tag')
 const tagOption = document.querySelector('#tag-options')
+const taskCount = document.querySelector("#task-count");
 
   
 
@@ -180,8 +182,8 @@ function render() {
       </div>
       <div  class=" flex flex-col  cursor-pointer gap-2" >
         <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-          <button class="btn btn-sm delete">delete</button>
-          <button class=" btn btn-sm edit">edit</button>
+          <button class="btn btn-sm delete">حذف</button>
+          <button class=" btn btn-sm edit">ویرایش</button>
         </div>
       </div>
       
@@ -219,8 +221,8 @@ function render() {
       
       <div  class=" flex flex-col  cursor-pointer gap-2" >
         <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-          <button class="btn btn-sm delete">delete</button>
-          <button class=" btn btn-sm edit">edit</button>
+          <button class="btn btn-sm delete">حذف</button>
+          <button class=" btn btn-sm edit">ویرایش</button>
         </div>
       </div>
       
@@ -238,7 +240,9 @@ function render() {
   ).join("")
   localStorage.setItem("tasks",JSON.stringify(tasks))
 
-
+  taskCount.textContent = `تعداد تسک شما ${
+    tasks.filter((task) => !task.isCompleted).length
+  } `;
 
   if (tasks.filter((task) => task.isCompleted).length > 0) {
     doneTaskTitle.classList.remove("hidden");
@@ -264,8 +268,8 @@ function render() {
         </div>
         <div  class=" flex flex-col  cursor-pointer gap-2" >    
           <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
-            <button class="btn btn-sm delete">delete</button>
-            <button class=" btn btn-sm edit">edit</button>
+            <button class="btn btn-sm delete">حذف</button>
+            <button class=" btn btn-sm edit">ویرایش</button>
           </div>
         </div>
 
@@ -305,11 +309,9 @@ taskList.addEventListener("click",(event)=>{
     const updateInput = editForm.firstElementChild;
     const updateButton = editForm.lastElementChild;
     const updateDescription = updateInput.nextElementSibling;
-    const editDeleteContainer = event.target.parentNode; // این همان div است که دکمه‌ها در آن قرار دارند
-    editDeleteContainer.classList.add("hidden"); // مخفی کردن دکمه‌ها
+    const editDeleteContainer = event.target.parentNode; 
+    editDeleteContainer.classList.add("hidden"); 
     addTag.classList.remove('hidden')
-    // const updateTag = editForm.querySelector('#edit-task-tag');
-    // const taskToEdit = tasks.find((task) => task.id === taskId);
     if (editForm.classList.contains("hidden")) {
       editForm.classList.remove("hidden");
       editForm.classList.add("flex");
@@ -368,11 +370,9 @@ doneTaskList.addEventListener("click", (event) => {
     const updateInput = editForm.firstElementChild;
     const updateButton = editForm.lastElementChild;
     const updateDescription = updateInput.nextElementSibling;
-    const editDeleteContainer = event.target.parentNode; // این همان div است که دکمه‌ها در آن قرار دارند
-    editDeleteContainer.classList.add("hidden"); // مخفی کردن دکمه‌ها
+    const editDeleteContainer = event.target.parentNode; 
+    editDeleteContainer.classList.add("hidden");
     addTag.classList.remove('hidden')
-    // const updateTag = editForm.querySelector('#edit-task-tag');
-    // const taskToEdit = tasks.find((task) => task.id === taskId);
     if (editForm.classList.contains("hidden")) {
       editForm.classList.remove("hidden");
       editForm.classList.add("flex");
