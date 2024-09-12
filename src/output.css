@@ -843,11 +843,11 @@ background-color: #180612;
 color: #fff;  
 }  
 
-:root ,
-body.dark-mode
-[data-theme] {
-  background-color: #180612 !important;
+
+:root{
+  background: none;
 }
+
 
 body.dark-mode .sidebar {  
 background-color: #091120;  
