@@ -37,7 +37,7 @@ let tasks = storage ? JSON.parse(storage) :[]
 
 document.querySelector("#app").innerHTML = `
   <h1 class="text-3xl"> تسک های امروز</h1>
-  <button id="add-task-btn" class="mt-10 btn border-2 border-dashed border-[#203E62] rounded-md p-4 input-bordered w-full flex items-center">
+  <button id="add-task-btn" class=" bg-[#091120]  mt-10 btn border-2 border-dashed border-[#203E62] rounded-md p-4 input-bordered w-full flex items-center">
   <span class=" w-full text-right">+ افزودن وظیفه ی جدید</span>
 </button>
 
@@ -49,17 +49,17 @@ document.querySelector("#app").innerHTML = `
 
       <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
       <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
-      <button id="add-task-tag" class= "hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
-
+      <button id="add-task-tag" class= " m-3 hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
+      
     
 
       
-      <div id="tag-options" class="hidden mt-2">
-        <button data-tag="low" class="tag-option bg-green-500 text-white px-4 py-2 rounded-md">پایین</button>
-        <button data-tag="medium" class="tag-option bg-yellow-500 text-white px-4 py-2 rounded-md">متوسط</button>
-        <button data-tag="high" class="tag-option bg-red-500 text-white px-4 py-2 rounded-md">بالا</button>
+      <div id="tag-options" class="hidden mr-3 ">
+        <button data-tag="پایین" class="tag-option bg-green-500 text-white px-4 py-2 rounded-md">پایین</button>
+        <button data-tag="متوسط" class="tag-option bg-yellow-500 text-white px-4 py-2 rounded-md">متوسط</button>
+        <button data-tag="بالا" class="tag-option bg-red-500 text-white px-4 py-2 rounded-md">بالا</button>
       </div>
-      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md flex items-start	">اضافه کردن تسک</button>
+      <button id="add-task-submit" class="m-3 bg-blue-500 text-white px-4 py-2 rounded-md flex ">اضافه کردن تسک</button>
 
 
     </div>
@@ -210,7 +210,7 @@ function render() {
         <div class='flex flex-col gap-3 '>
           <div class='flex gap-5'>
           <h3 class="font-bold mb-3">${task.title}</h3>
-          <span class="tag ${task.tag === 'low' ? 'bg-green-500' : task.tag === 'medium' ? 'bg-yellow-500' : 'bg-red-500'} text-white px-2 py-1 rounded-md">${task.tag}</span>
+          <span class="tag ${task.tag === 'پایین' ? 'bg-green-500' : task.tag === 'متوسط' ? 'bg-yellow-500' : 'bg-red-500'} text-white px-2 py-1 rounded-md">${task.tag}</span>
           </div>
           <p class="text-gray-500 flex">${task.dec}</p>
         </div>
@@ -305,6 +305,8 @@ taskList.addEventListener("click",(event)=>{
     const updateInput = editForm.firstElementChild;
     const updateButton = editForm.lastElementChild;
     const updateDescription = updateInput.nextElementSibling;
+    const editDeleteContainer = event.target.parentNode; // این همان div است که دکمه‌ها در آن قرار دارند
+    editDeleteContainer.classList.add("hidden"); // مخفی کردن دکمه‌ها
     addTag.classList.remove('hidden')
     // const updateTag = editForm.querySelector('#edit-task-tag');
     // const taskToEdit = tasks.find((task) => task.id === taskId);
@@ -321,6 +323,7 @@ taskList.addEventListener("click",(event)=>{
       tasks = tasks.map((task) =>
         task.id === taskId ? { ...task, title: updateInput.value, dec:updateDescription.value} : task
       );
+      editDeleteContainer.classList.remove("hidden");
       render();
     });
   }
@@ -359,13 +362,17 @@ doneTaskList.addEventListener("click", (event) => {
   }
 
 
-  if (event.target.classList.contains("edit")) {
-    const taskId = parseInt(event.target.parentNode.dataset.id);
-    const editForm = event.target.parentNode.parentNode.nextElementSibling;
+  if(event.target.classList.contains("edit")){
+    const taskId = parseInt(event.target.parentNode.dataset.id)
+    const editForm = event.target.parentNode.parentNode.nextElementSibling
     const updateInput = editForm.firstElementChild;
     const updateButton = editForm.lastElementChild;
     const updateDescription = updateInput.nextElementSibling;
-
+    const editDeleteContainer = event.target.parentNode; // این همان div است که دکمه‌ها در آن قرار دارند
+    editDeleteContainer.classList.add("hidden"); // مخفی کردن دکمه‌ها
+    addTag.classList.remove('hidden')
+    // const updateTag = editForm.querySelector('#edit-task-tag');
+    // const taskToEdit = tasks.find((task) => task.id === taskId);
     if (editForm.classList.contains("hidden")) {
       editForm.classList.remove("hidden");
       editForm.classList.add("flex");
@@ -373,14 +380,15 @@ doneTaskList.addEventListener("click", (event) => {
       editForm.classList.remove("flex");
       editForm.classList.add("hidden");
     }
+    
 
     updateButton.addEventListener("click", () => {
       tasks = tasks.map((task) =>
-        task.id === taskId ? { ...task, title: updateInput.value, dec: updateDescription.value } : task
+        task.id === taskId ? { ...task, title: updateInput.value, dec:updateDescription.value} : task
       );
+      editDeleteContainer.classList.remove("hidden");
       render();
     });
-
   }
 });
 
