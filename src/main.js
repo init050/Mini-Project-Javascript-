@@ -42,21 +42,30 @@ document.querySelector("#app").innerHTML = `
 </button>
 
 
+
   
-  <button id="add-task-tag" class= "hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
-  <div id="tag-options" class="hidden mt-2">
-    <button data-tag="low" class="tag-option bg-green-500 text-white px-4 py-2 rounded-md">پایین</button>
-    <button data-tag="medium" class="tag-option bg-yellow-500 text-white px-4 py-2 rounded-md">متوسط</button>
-    <button data-tag="high" class="tag-option bg-red-500 text-white px-4 py-2 rounded-md">بالا</button>
-  </div>
+    <div id="task-form" class="hidden mt-4 border rounded-xl">
 
 
+      <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
+      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
+      <button id="add-task-tag" class= "hidden bg-gray-500 text-white px-4 py-2 rounded-md ">تگ‌ها</button>
 
-  <div id="task-form" class="hidden mt-4">
-    <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-    <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
-    <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
-  </div>
+    
+
+      
+      <div id="tag-options" class="hidden mt-2">
+        <button data-tag="low" class="tag-option bg-green-500 text-white px-4 py-2 rounded-md">پایین</button>
+        <button data-tag="medium" class="tag-option bg-yellow-500 text-white px-4 py-2 rounded-md">متوسط</button>
+        <button data-tag="high" class="tag-option bg-red-500 text-white px-4 py-2 rounded-md">بالا</button>
+      </div>
+      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md flex items-start	">اضافه کردن تسک</button>
+
+
+    </div>
+    
+
+
   <p id="task-count" class="mt-3"></p>
 
   <div id ="task-list"></div>
@@ -179,10 +188,10 @@ function render() {
       
 
       
-      <div id="task-form" class="hidden flex flex-col w-full mt-4">
+      <div id="task-form" class="hidden flex flex-col w-full mt-4"> 
       <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
       <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
-      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">ویرایش تسک</button>
       </div>
       </div>
 
@@ -196,12 +205,18 @@ function render() {
           <input data-id="${task.id}" type="checkbox" class="checkbox" />
           </label>
         </div>
-        <div >
+
+        
+        <div class='flex flex-col gap-3 '>
+          <div class='flex gap-5'>
           <h3 class="font-bold mb-3">${task.title}</h3>
-          <p class="text-gray-500">${task.dec}</p>
           <span class="tag ${task.tag === 'low' ? 'bg-green-500' : task.tag === 'medium' ? 'bg-yellow-500' : 'bg-red-500'} text-white px-2 py-1 rounded-md">${task.tag}</span>
+          </div>
+          <p class="text-gray-500 flex">${task.dec}</p>
         </div>
       </div>
+      
+      
       <div  class=" flex flex-col  cursor-pointer gap-2" >
         <div class="settingList" data-id = ${task.id} class="flex gap-2 ">
           <button class="btn btn-sm delete">delete</button>
@@ -213,7 +228,7 @@ function render() {
       <div id="task-form" class="hidden flex flex-col w-full mt-4">
       <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
       <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
-      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
+      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">ویرایش تسک</button>
       </div>
       </div>
       
@@ -256,11 +271,14 @@ function render() {
 
         
 
-  <div id="task-form" class="hidden flex flex-col w-full mt-4">
-  <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
-  <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
-  <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">اضافه کردن تسک</button>
-  </div>
+        <div id="task-form" class="hidden flex flex-col w-full mt-4">
+      <input type="text" id='task-title' placeholder='نام تسک' class='border p-2 rounded-md w-full mb-2' />
+      <input id="task-dec" placeholder='توضیحات' class="border p-2 rounded-md w-full mb-2"></input  >
+      <button id="add-task-submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">ویرایش تسک</button>
+      </div>
+      </div>
+
+      
         </div>`).join("")
  
 

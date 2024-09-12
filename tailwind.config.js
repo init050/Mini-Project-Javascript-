@@ -6,6 +6,13 @@ export default {
   },
   plugins: [require("daisyui")],
 
+  
+
     // themes: ["light", "dark"],
 
 };
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  important: true,
+}
