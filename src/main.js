@@ -113,13 +113,14 @@ addTag.addEventListener('click', function(){
 
 
 
+
+
 document.querySelectorAll('.tag-option').forEach((button) => {
   button.addEventListener('click', function() {
     selectedTag = button.getAttribute('data-tag');
     document.getElementById('tag-options').classList.add('hidden');
   });
 });
-
 
 
 addTaskSubmit.addEventListener('click', function(){
@@ -144,6 +145,7 @@ addTaskSubmit.addEventListener('click', function(){
     dec: taskDec,
     isCompleted: false,
     tag: selectedTag,
+  
     
   };
 
@@ -167,7 +169,7 @@ function render() {
   .filter((task) => !task.isCompleted)
   .map(
     (task) => { console.log(task)
-      return !task.tag ? `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
+      return !task.tag ? `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-700 border-r-4  rounded-xl border border-gray-200 ">
       <div class="flex gap-5">
         <div class="form-control self-start">
           <label class="label cursor-pointer">
@@ -200,7 +202,7 @@ function render() {
 
 
       
-      `: `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-red-700 border-r-4  rounded-xl border border-gray-200 ">
+      `: `<div  class="m-5 p-7 h-30 flex justify-between items-center border-r-700 border-r-4  rounded-xl border border-gray-200 ">
       <div class="flex gap-5">
         <div class="form-control self-start">
           <label class="label cursor-pointer">
